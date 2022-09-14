@@ -1,4 +1,4 @@
-export const commands = [
+exports.commands = [
   { command: 'follow', description: 'Otomatis mengikuti konten setiap harinya' },
   { command: 'pulo_follow', description: '[GROUP] Otomatis mengikuti konten setiap harinya' },
   { command: 'latest', description: 'Melihat konten hari ini' },
@@ -9,7 +9,7 @@ export const commands = [
   },
 ];
 
-export const message = {
+exports.message = {
   welcome: `Selamat datang di Pulo Bot - Kumpulan konten developer Indonesia
 
 Command yang tersedia:

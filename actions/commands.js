@@ -1,7 +1,7 @@
-import { getContents } from '../utils/content.mjs';
-import errorHandler from '../utils/errorHandler.mjs';
+const { getContents } = require('../utils/content.js');
+const errorHandler = require('../utils/errorHandler.js');
 
-export const follow = (ctx) => {
+exports.follow = (ctx) => {
   try {
     const userIsAdmin = ctx.state._user_is_admin;
     const isGroup = ctx.chat.id < 0;
@@ -20,7 +20,7 @@ export const follow = (ctx) => {
   }
 };
 
-export const unfollow = (ctx) => {
+exports.unfollow = (ctx) => {
   try {
     const userIsAdmin = ctx.state._user_is_admin;
     const isGroup = ctx.chat.id < 0;
@@ -39,7 +39,7 @@ export const unfollow = (ctx) => {
   }
 };
 
-export const latest = async (ctx) => {
+exports.latest = async (ctx) => {
   try {
     let lastDateChecked = new Date();
     lastDateChecked.setDate(lastDateChecked.getDate() - 10);

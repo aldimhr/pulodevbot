@@ -1,10 +1,9 @@
-import dotenv from 'dotenv';
-dotenv.config();
+require('dotenv').config();
 
-import supabase from '../supabase.js';
-import errorHandler from '../utils/errorHandler.mjs';
+const supabase = require('../supabase.js');
+const errorHandler = require('../utils/errorHandler.js');
 
-export const getUsers = async () => {
+exports.getUsers = async () => {
   let { data, error } = await supabase.from(process.env.SUPA_TABLE).select('*');
 
   if (error) errorHandler({ err: error, name: 'helpers/database.js getUsers()' });
@@ -12,7 +11,7 @@ export const getUsers = async () => {
   return { data, error };
 };
 
-export const getUser = async (opt) => {
+exports.getUser = async (opt) => {
   let { data, error } = await supabase.from(process.env.SUPA_TABLE).select('*').match(opt);
 
   if (error) errorHandler({ err: error, name: 'helpers/database.js getUser()' });
@@ -20,7 +19,7 @@ export const getUser = async (opt) => {
   return { data, error };
 };
 
-export const updateUser = async ({ chat_id, row }) => {
+exports.updateUser = async ({ chat_id, row }) => {
   const { data, error } = await supabase
     .from(process.env.SUPA_TABLE)
     .update(row)
@@ -31,7 +30,7 @@ export const updateUser = async ({ chat_id, row }) => {
   return { data, error };
 };
 
-export const addUser = async ({ chat_id, type, follow = false }) => {
+exports.addUser = async ({ chat_id, type, follow = false }) => {
   const { data, error } = await supabase.from(process.env.SUPA_TABLE).insert([
     {
       chat_id: chat_id.toString(),
@@ -45,7 +44,7 @@ export const addUser = async ({ chat_id, type, follow = false }) => {
   return { data, error };
 };
 
-export const getAdmin = async () => {
+exports.getAdmin = async () => {
   let { data, error } = await supabase
     .from(process.env.SUPA_TABLE)
     .select('*')
@@ -56,7 +55,7 @@ export const getAdmin = async () => {
   return { data, error };
 };
 
-export const getConfig = async () => {
+exports.getConfig = async () => {
   let { data, error } = await supabase.from(process.env.SUPA_TABLE_CONFIG).select('*');
 
   if (error) errorHandler({ err: error, name: 'helpers/database.js getConfig()' });

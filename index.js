@@ -1,12 +1,11 @@
-import './config/loadenv.js';
+require('dotenv').config();
+const { Telegraf } = require('telegraf');
 
-import { Telegraf } from 'telegraf';
+const errorHandler = require('./utils/errorHandler.js');
 
-import errorHandler from './utils/errorHandler.mjs';
-
-import startAction from './actions/start.mjs';
-import middlewareAction from './actions/middleware.mjs';
-import { latest, unfollow, follow } from './actions/commands.mjs';
+const startAction = require('./actions/start.js');
+const middlewareAction = require('./actions/middleware.js');
+const { latest, unfollow, follow } = require('./actions/commands.js');
 
 const latestAction = latest;
 const unfollowAction = unfollow;
@@ -25,22 +24,34 @@ bot.catch((err, ctx) => {
 
 bot.launch();
 
+// import http from 'http';
+// http
+//   .createServer(async function (req, res) {
+//     console.log({ req });
+
+//     await bot.handleUpdate(JSON.parse(req.body));
+//     console.log(`Just got a request at ${req.url}!`);
+//     res.write('Yo!');
+//     res.end();
+//   })
+//   .listen(process.env.PORT || 3000);
+
 // addEventListener('fetch', (event) => {
 //   event.respondWith(handleRequest(event.request));
 // });
 
 // async function handleRequest(request) {
-//   // return new Response("Hello world")
+//   return new Response('Hello world');
 //   console.log({ request });
-//   // try {
-//   //   if (event.body) {
-//   //     await bot.handleUpdate(JSON.parse(event.body));
-//   //     return { statusCode: 200, body: '' };
-//   //   } else {
-//   //     return { statusCode: 400, body: 'This endpoint is meant for bot and telegram communication' };
-//   //   }
-//   // } catch (e) {
-//   //   console.error('error in handler:', e);
-//   //   return { statusCode: 400, body: 'This endpoint is meant for bot and telegram communication' };
-//   // }
+//   try {
+//     if (event.body) {
+//       await bot.handleUpdate(JSON.parse(event.body));
+//       return { statusCode: 200, body: '' };
+//     } else {
+//       return { statusCode: 400, body: 'This endpoint is meant for bot and telegram communication' };
+//     }
+//   } catch (e) {
+//     console.error('error in handler:', e);
+//     return { statusCode: 400, body: 'This endpoint is meant for bot and telegram communication' };
+//   }
 // }

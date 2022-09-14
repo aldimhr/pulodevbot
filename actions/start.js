@@ -1,7 +1,7 @@
-import { message, commands } from '../config/constans.mjs';
-import errorHandler from '../utils/errorHandler.mjs';
+const { message, commands } = require('../config/constans.js');
+const errorHandler = require('../utils/errorHandler.js');
 
-export default (ctx) => {
+module.exports = (ctx) => {
   try {
     ctx.reply(message.welcome);
     ctx.telegram.setMyCommands(commands, { type: 'chat', chat_id: ctx.chat.id });

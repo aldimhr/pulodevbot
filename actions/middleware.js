@@ -1,6 +1,6 @@
-import errorHandler from '../utils/errorHandler.mjs';
+const errorHandler = require('../utils/errorHandler.js');
 
-export default async (ctx, next) => {
+module.exports = async (ctx, next) => {
   if (ctx.chat.id > 0) return next();
 
   return await bot.telegram

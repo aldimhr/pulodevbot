@@ -1,10 +1,10 @@
-import { Telegraf } from 'telegraf';
+const { Telegraf } = require('telegraf');
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 const adminChatId = [519613720, 1392922267];
 
-export default function ({ err, name, ctx }) {
+module.exports = function ({ err, name, ctx }) {
   const headers = JSON.stringify(err?.response?.headers, null, '-  ') || null;
   const request = JSON.stringify(err?.request, null, '-  ') || null;
   const config = JSON.stringify(err?.config, null, '-  ') || null;
@@ -29,4 +29,4 @@ export default function ({ err, name, ctx }) {
   adminChatId.forEach((chat_id) => {
     bot.telegram.sendMessage(chat_id, `==== ${name} ====\n${stringMessage}`);
   });
-}
+};
