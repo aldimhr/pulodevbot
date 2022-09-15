@@ -4,9 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "esbuild index.js --bundle --outdir=dist --platform=node",
-    "start": "node index.js",
-    "dev": "nodemon index.js",
     "test": "jest",
     "test:watch": "jest --watch"
   },
