@@ -1,4 +1,4 @@
-# [PULODEV](https://pulo.dev/) TELEGRAM BOT
+# [PULODEV](https://t.me/PuloDev_bot) TELEGRAM BOT
 
 [PuloDev](https://pulo.dev/) adalah Kumpulan konten developer Indonesia. Bot ini dibuat untuk mempermudah mendapat konten terbaru dari developer Indonesia melalui Telegram.
 
