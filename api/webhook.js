@@ -11,12 +11,6 @@ const latestAction = latest;
 const unfollowAction = unfollow;
 const followAction = follow;
 
-/*
-  "build": "esbuild index.js --bundle --outdir=dist --platform=node",
-  "start": "node index.js",
-  "dev": "nodemon index.js",
-*/
-
 module.exports = async (req, res) => {
   const bot = new Telegraf(process.env.BOT_TOKEN);
 
@@ -25,15 +19,16 @@ module.exports = async (req, res) => {
   if (body?.message) {
     bot.use(async (ctx, next) => await middlewareAction(ctx, next));
     bot.start((ctx) => startAction(ctx));
-    bot.command(['follow', 'pulo_follow'], (ctx) => followAction(ctx));
-    bot.command(['unfollow', 'pulo_unfollow'], (ctx) => unfollowAction(ctx));
+    bot.command(['follow', 'pulo_follow'], async (ctx) => await followAction(ctx));
+    bot.command(['unfollow', 'pulo_unfollow'], async (ctx) => await unfollowAction(ctx));
     bot.command('latest', async (ctx) => await latestAction(ctx));
     bot.catch((err, ctx) => {
       return errorHandler({ err, ctx, name: 'index.js/bot.catch()' });
     });
 
     await bot.handleUpdate(body);
+    return res.send();
   }
 
-  res.status(400).send('This endpoint is meant for bot and telegram communication');
+  return res.status(400).send('This endpoint is meant for bot and telegram communication');
 };

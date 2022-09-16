@@ -10,7 +10,7 @@ exports.commands = [
 ];
 
 exports.message = {
-  welcome: `Selamat datang di Pulo Bot - Kumpulan konten developer Indonesia
+  welcome: `Selamat datang di PuloDev Bot - Kumpulan konten developer Indonesia
 
 Command yang tersedia:
 /follow - Mendapat konten terbaru setiap harinya
@@ -18,6 +18,6 @@ Command yang tersedia:
 /latest - Melihat konten terbaru hari ini
 
 Command yang tersedia juga dapat dilihat di menu sebelah kiri bawah`,
-  follow: `Berhasil mengikuti Pulo Bot`,
-  unfollow: `Berhasil berhenti mengikuti Pulo Bot`,
+  follow: `Berhasil mengikuti PuloDev Bot`,
+  unfollow: `Berhasil berhenti mengikuti PuloDev Bot`,
 };

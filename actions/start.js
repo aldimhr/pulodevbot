@@ -1,10 +1,23 @@
-const { message, commands } = require('../config/constans.js');
+const { message } = require('../config/constans.js');
+const { getUser, addUser } = require('../database/index.js');
 const errorHandler = require('../utils/errorHandler.js');
 
-module.exports = (ctx) => {
+module.exports = async (ctx) => {
   try {
+    const { id: chat_id } = await ctx.from;
+
+    const _IS_GROUP = ctx.state._group;
+    if (_IS_GROUP) return;
+
     ctx.reply(message.welcome);
-    ctx.telegram.setMyCommands(commands, { type: 'chat', chat_id: ctx.chat.id });
+
+    const user = await getUser({ chat_id: chat_id });
+    const _USER_NOT_FOUND = !user.data.length;
+
+    if (_USER_NOT_FOUND) {
+      const type = _IS_GROUP ? 'group' : 'private';
+      await addUser({ chat_id, type });
+    }
   } catch (err) {
     errorHandler({ err, ctx, name: 'index.js/bot.start()' });
   }

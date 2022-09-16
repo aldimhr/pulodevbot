@@ -1,50 +1,74 @@
-const { getContents } = require('../utils/content.js');
+const { getUser, updateUser, addUser, getConfig } = require('../database/index.js');
 const errorHandler = require('../utils/errorHandler.js');
+const { getContents } = require('../utils/content.js');
+const { message } = require('../config/constans.js');
 
-exports.follow = (ctx) => {
+exports.follow = async (ctx) => {
   try {
-    const userIsAdmin = ctx.state._user_is_admin;
-    const isGroup = ctx.chat.id < 0;
+    const chat_id = ctx.chat.id;
+    const _GROUP = ctx.state._group;
+    const _USER_IS_ADMIN = ctx.state._user_is_admin;
 
-    if (isGroup) {
-      if (userIsAdmin) {
-      } else {
-      }
-    } else {
+    if (!_GROUP || (_GROUP && _USER_IS_ADMIN)) {
       ctx.reply(message.follow, {
         reply_to_message_id: ctx.message.message_id,
       });
+
+      const user = await getUser({ chat_id });
+      const _USER_NOT_FOUND = !user.data.length;
+      if (_USER_NOT_FOUND) {
+        // add user to db
+        await addUser({ chat_id, type: 'group', follow: true });
+      } else {
+        // update user in db
+        const row = { follow: true };
+
+        const _USER_HAS_NOT_FOLLOWED = !user.data[0].follow;
+        if (_USER_HAS_NOT_FOLLOWED) {
+          await updateUser({ chat_id, row });
+        }
+      }
     }
   } catch (err) {
-    errorHandler({ err, ctx, name: 'index.js/bot.command("follow")' });
+    errorHandler({ err, ctx, name: 'command("follow")' });
   }
 };
 
-exports.unfollow = (ctx) => {
+exports.unfollow = async (ctx) => {
   try {
-    const userIsAdmin = ctx.state._user_is_admin;
-    const isGroup = ctx.chat.id < 0;
+    const chat_id = ctx.chat.id;
+    const _GROUP = ctx.state._group;
+    const _USER_IS_ADMIN = ctx.state._user_is_admin;
 
-    if (isGroup) {
-      if (userIsAdmin) {
-      } else {
-      }
-    } else {
+    if (!_GROUP || (_GROUP && _USER_IS_ADMIN)) {
       ctx.reply(message.unfollow, {
         reply_to_message_id: ctx.message.message_id,
       });
+
+      const user = await getUser({ chat_id });
+      const _USER_NOT_FOUND = !user.data.length;
+      if (_USER_NOT_FOUND) {
+        // add user to db
+        await addUser({ chat_id, type: 'group', follow: false });
+      } else {
+        // update user in db
+        const row = { follow: false };
+        const _USER_HAS_FOLLOWED = user.data[0].follow;
+        if (_USER_HAS_FOLLOWED) {
+          await updateUser({ chat_id, row });
+        }
+      }
     }
   } catch (err) {
-    errorHandler({ err, ctx, name: 'index.js/bot.command("unfollow")' });
+    errorHandler({ err, ctx, name: 'command("unfollow")' });
   }
 };
 
 exports.latest = async (ctx) => {
   try {
-    let lastDateChecked = new Date();
-    lastDateChecked.setDate(lastDateChecked.getDate() - 10);
+    const { last_date_checked } = (await getConfig()).data[0];
 
-    let getposts = await getContents(lastDateChecked).then((data) =>
+    let getposts = await getContents(last_date_checked).then((data) =>
       data.map(
         ({ title, owner, url, contributor, media }) =>
           `<a href="${url.trim()}"><b>${title.trim()}</b></a> | ${media.trim()} | ${
@@ -57,6 +81,6 @@ exports.latest = async (ctx) => {
       parse_mode: 'HTML',
     });
   } catch (err) {
-    errorHandler({ err, ctx, name: 'index.js/bot.command("latest")' });
+    errorHandler({ err, ctx, name: 'command("latest")' });
   }
 };

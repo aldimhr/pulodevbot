@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const supabase = require('../supabase.js');
+const supabase = require('../config/supabase-init.js');
 const errorHandler = require('../utils/errorHandler.js');
 
 exports.getUsers = async () => {
@@ -25,7 +25,7 @@ exports.updateUser = async ({ chat_id, row }) => {
     .update(row)
     .eq('chat_id', chat_id);
 
-  if (error) errorHandler({ err: error, name: 'helpers/database.js updateUser()' });
+  if (error) errorHandler({ err: error, name: 'database updateUser()' });
 
   return { data, error };
 };
@@ -39,7 +39,7 @@ exports.addUser = async ({ chat_id, type, follow = false }) => {
     },
   ]);
 
-  if (error) errorHandler({ err: error, name: 'helpers/database.js addUser()' });
+  if (error) errorHandler({ err: error, name: 'database addUser()' });
 
   return { data, error };
 };
@@ -50,7 +50,7 @@ exports.getAdmin = async () => {
     .select('*')
     .match({ type: 'admin' });
 
-  if (error) errorHandler({ err: error, name: 'helpers/database.js getAdmin()' });
+  if (error) errorHandler({ err: error, name: 'database getAdmin()' });
 
   return { data, error };
 };
@@ -58,7 +58,7 @@ exports.getAdmin = async () => {
 exports.getConfig = async () => {
   let { data, error } = await supabase.from(process.env.SUPA_TABLE_CONFIG).select('*');
 
-  if (error) errorHandler({ err: error, name: 'helpers/database.js getConfig()' });
+  if (error) errorHandler({ err: error, name: 'database getConfig()' });
 
   return { data, error };
 };
