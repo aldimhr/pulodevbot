@@ -62,3 +62,14 @@ exports.getConfig = async () => {
 
   return { data, error };
 };
+
+exports.updateConfig = async (newDate) => {
+  let { data, error } = await supabase
+    .from(process.env.SUPA_TABLE_CONFIG)
+    .update({ last_date_checked: newDate })
+    .eq('id', 1);
+
+  if (error) errorHandler({ err: error, name: 'database updateConfig()' });
+
+  return { data, error };
+};

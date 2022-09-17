@@ -12,6 +12,7 @@ exports.getContents = async (date) => {
         }`
     );
   };
+
   const randomContents = () => {
     const max = data.data.length;
     const total = 3;
@@ -37,5 +38,10 @@ exports.getContents = async (date) => {
 
     return randomContent;
   };
-  return { filteredContents: filteredContents(), randomContents: randomContents() };
+
+  return {
+    filteredContents: filteredContents(),
+    randomContents: randomContents(),
+    data: data.data,
+  };
 };
