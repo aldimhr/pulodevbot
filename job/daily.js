@@ -19,9 +19,9 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
         }
       );
 
-      users.data.forEach(async (user) => {
+      users.data.forEach((user) => {
         const chat_id = user.chat_id;
-        await bot.telegram.sendMessage(chat_id, contents.join('\n\n'), {
+        bot.telegram.sendMessage(chat_id, contents.join('\n\n'), {
           parse_mode: 'HTML',
         });
       });
