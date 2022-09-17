@@ -1,11 +1,11 @@
 exports.commands = [
   { command: 'follow', description: 'Mengikuti konten setiap harinya' },
-  { command: 'pulo_follow', description: '[GROUP]' },
+  { command: 'pulo', description: 'follow' },
   { command: 'latest', description: 'Melihat konten hari ini' },
   { command: 'unfollow', description: 'Berhenti mengikuti konten setiap harinya' },
   {
-    command: 'pulo_unfollow',
-    description: '[GROUP]',
+    command: 'unpulo',
+    description: 'unfollow',
   },
 ];
 

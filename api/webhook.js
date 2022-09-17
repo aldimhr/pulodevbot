@@ -19,8 +19,8 @@ module.exports = async (req, res) => {
   if (body?.message) {
     bot.use(async (ctx, next) => await middlewareAction(ctx, next));
     bot.start((ctx) => startAction(ctx));
-    bot.command(['follow', 'pulo_follow'], async (ctx) => await followAction(ctx));
-    bot.command(['unfollow', 'pulo_unfollow'], async (ctx) => await unfollowAction(ctx));
+    bot.command(['follow', 'pulo'], async (ctx) => await followAction(ctx));
+    bot.command(['unfollow', 'unpulo'], async (ctx) => await unfollowAction(ctx));
     bot.command('latest', async (ctx) => await latestAction(ctx));
     bot.catch((err, ctx) => {
       return errorHandler({ err, ctx, name: 'index.js/bot.catch()' });
