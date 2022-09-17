@@ -5,7 +5,7 @@ const { getContents } = require('../utils/content');
 const errorHandler = require('../utils/errorHandler');
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
-module.exports = async () => {
+(async () => {
   try {
     const users = await getUser({ follow: true });
 
@@ -29,4 +29,4 @@ module.exports = async () => {
   } catch (err) {
     errorHandler({ err, name: 'job/daily.js' });
   }
-};
+})();
