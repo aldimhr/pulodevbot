@@ -68,13 +68,11 @@ exports.latest = async (ctx) => {
   try {
     const { last_date_checked } = (await getConfig()).data[0];
 
-    let getposts = await getContents(last_date_checked).then((data) =>
-      data.map(
-        ({ title, owner, url, contributor, media }) =>
-          `<a href="${url.trim()}"><b>${title.trim()}</b></a> | ${media.trim()} | ${
-            owner === '' ? contributor.trim() : owner.trim()
-          }`
-      )
+    let getposts = await getContents(last_date_checked).then(
+      ({ filteredContents, randomContents }) => {
+        if (filteredContents.length) return filteredContents;
+        return randomContents;
+      }
     );
 
     ctx.reply(getposts.join('\n\n'), {
