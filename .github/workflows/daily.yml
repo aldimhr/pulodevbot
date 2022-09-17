@@ -41,3 +41,6 @@ jobs:
           SUPA_KEY: ${{ secrets.SUPA_KEY }}
           SUPA_TABLE: ${{ secrets.SUPA_TABLE }}
           SUPA_TABLE_CONFIG: ${{ secrets.SUPA_TABLE_CONFIG }}
+      - name: Sleep for 60 seconds
+        run: sleep 60s
+        shell: bash
