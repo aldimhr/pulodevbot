@@ -1,17 +1,43 @@
-name: GitHub Actions Demo
+name: Post pulodev content daily
+
 on: [push]
+# schedule:
+# - cron: '*/5 * * * *'
+
 jobs:
-  Explore-GitHub-Actions:
+  post-content:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Check out repository code
         uses: actions/checkout@v3
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - name: Get pnpm store directory
+        id: pnpm-cache
         run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.0.1
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
+      - name: Install dependencies
+        run: pnpm install
+      - name: Run code
+        run: node job/daily.js
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          SUPA_URL: ${{ secrets.SUPA_URL }}
+          SUPA_KEY: ${{ secrets.SUPA_KEY }}
+          SUPA_TABLE: ${{ secrets.SUPA_TABLE }}
+          SUPA_TABLE_CONFIG: ${{ secrets.SUPA_TABLE_CONFIG }}
