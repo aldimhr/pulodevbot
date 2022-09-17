@@ -1,8 +1,8 @@
 name: Post pulodev content daily
 
-on: [push]
-# schedule:
-# - cron: '*/5 * * * *'
+on:
+  schedule:
+    - cron: '0 7 * * *'
 
 jobs:
   post-content:
