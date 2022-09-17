@@ -14,7 +14,7 @@ exports.message = {
 
 Command yang tersedia:
 /follow - Mendapat konten terbaru setiap harinya
-/unfollow - Berhenti mendapat konter terbaru setiap harinya
+/unfollow - Berhenti mendapat konten terbaru setiap harinya
 /latest - Melihat konten terbaru hari ini
 
 Command yang tersedia juga dapat dilihat di menu sebelah kiri bawah`,
