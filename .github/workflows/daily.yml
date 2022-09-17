@@ -34,7 +34,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Run code
-        run: node job/daily.js
+        run: pnpm job
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           SUPA_URL: ${{ secrets.SUPA_URL }}

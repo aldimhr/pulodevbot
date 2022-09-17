@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "job": "node job/daily.js",
     "test": "jest",
     "test:watch": "jest --watch"
   },
