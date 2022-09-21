@@ -39,6 +39,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
       });
     }
   } catch (err) {
+    console.log(err);
     errorHandler({ err, name: 'job/daily.js' });
   }
 })();
