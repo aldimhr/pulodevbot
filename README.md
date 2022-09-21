@@ -21,3 +21,5 @@ pnpm install
 ## Todo
 
 - [x] Get daily content updates in groups or private chat
+- [ ] Follow specific contents type (media)
+- [ ] Search contents by keyword
